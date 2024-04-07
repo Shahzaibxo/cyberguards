@@ -1,3 +1,4 @@
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import assest6 from "/lap.png"
@@ -29,7 +30,6 @@ export default function Contact() {
             <div className="flex justify-center items-center pt-20 mb-10">
                 <h1 className="text-5xl text-white">Contact Us</h1>
             </div>
-            <img src={assest6} class="hidden lg:block absolute top-[55px] left-[180px] w-32 md:w-40 lg:w-48 z-0" alt="Background Image" />
             <section id="contact-us" className=" flex items-top justify-center min-h-[700px]">
 
                 <div className="max-w-6xl mx-auto sm:px-6 lg:px-8">
@@ -108,54 +108,72 @@ export default function Contact() {
                                     </div>
                                 </div>
                             </div>
+                            <Formik
+                                initialValues={{ user_email: '' }}
+                                validate={values => {
+                                    const errors = {};
+                                    if (!values.user_email) {
+                                        errors.user_email = 'Required';
+                                    } else if (
+                                        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.user_email)
+                                    ) {
+                                        errors.user_email = 'Invalid email address';
+                                    }
+                                    return errors;
+                                }}
+                             
+                            >
+                                {({ isSubmitting }) => (
+                                    <form ref={form} onSubmit={sendEmail} className="p-6 flex flex-col justify-center">
+                                        <div className="flex flex-col">
+                                            <label htmlFor="user_name" className="hidden">
+                                                Full Name
+                                            </label>
+                                            <input
+                                                type="name"
+                                                name="user_name"
+                                                id="name"
+                                                placeholder="Full Name"
+                                                className="w-100 mt-2 py-3 px-3 rounded-lg bg-white border border-gray-400 text-gray-800 font-semibold focus:border-orange-500 focus:outline-none"
+                                            />
+                                            <ErrorMessage name="user_email" component="div" />
+                                        </div>
 
-                            <form ref={form} onSubmit={sendEmail} className="p-6 flex flex-col justify-center">
-                                <div className="flex flex-col">
-                                    <label htmlFor="user_name" className="hidden">
-                                        Full Name
-                                    </label>
-                                    <input
-                                        type="name"
-                                        name="user_name"
-                                        id="name"
-                                        placeholder="Full Name"
-                                        className="w-100 mt-2 py-3 px-3 rounded-lg bg-white border border-gray-400 text-gray-800 font-semibold focus:border-orange-500 focus:outline-none"
-                                    />
-                                </div>
+                                        <div className="flex flex-col mt-2">
+                                            <label htmlFor="user_email" className="hidden">
+                                                Email
+                                            </label>
+                                            <input
+                                                type="email"
+                                                name="user_email"
+                                                id="email"
+                                                placeholder="Email"
+                                                className="w-100 mt-2 py-3 px-3 rounded-lg bg-white border border-gray-400 text-gray-800 font-semibold focus:border-orange-500 focus:outline-none"
+                                            />
+                                        </div>
 
-                                <div className="flex flex-col mt-2">
-                                    <label htmlFor="user_email" className="hidden">
-                                        Email
-                                    </label>
-                                    <input
-                                        type="email"
-                                        name="user_email"
-                                        id="email"
-                                        placeholder="Email"
-                                        className="w-100 mt-2 py-3 px-3 rounded-lg bg-white border border-gray-400 text-gray-800 font-semibold focus:border-orange-500 focus:outline-none"
-                                    />
-                                </div>
+                                        <div className="flex flex-col mt-2">
+                                            <label htmlFor="user_tel" className="hidden">
+                                                Number
+                                            </label>
+                                            <input
+                                                type="tel"
+                                                name="user_tel"
+                                                id="tel"
+                                                placeholder="Telephone Number"
+                                                className="w-100 mt-2 py-3 px-3 rounded-lg bg-white border border-gray-400 text-gray-800 font-semibold focus:border-orange-500 focus:outline-none"
+                                            />
+                                        </div>
 
-                                <div className="flex flex-col mt-2">
-                                    <label htmlFor="user_tel" className="hidden">
-                                        Number
-                                    </label>
-                                    <input
-                                        type="tel"
-                                        name="user_tel"
-                                        id="tel"
-                                        placeholder="Telephone Number"
-                                        className="w-100 mt-2 py-3 px-3 rounded-lg bg-white border border-gray-400 text-gray-800 font-semibold focus:border-orange-500 focus:outline-none"
-                                    />
-                                </div>
-
-                                <button
-                                    type="submit" value="Send"
-                                    className="md:w-32 bg-cyan-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg mt-3 transition ease-in-out duration-300"
-                                >
-                                    Submit
-                                </button>
-                            </form>
+                                        <button
+                                            type="submit" value="Send"
+                                            className="md:w-32 bg-cyan-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg mt-3 transition ease-in-out duration-300"
+                                        >
+                                            Submit
+                                        </button>
+                                    </form>
+                                )}
+                            </Formik>
                         </div>
                     </div>
                 </div>

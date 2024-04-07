@@ -1,3 +1,5 @@
+import emailjs from '@emailjs/browser';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import CountUp from "react-countup"
 import ScrollTrigger from "react-scroll-trigger"
 import { Image } from "@nextui-org/react"
@@ -22,7 +24,7 @@ import ok4 from "/buzzfeed.svg"
 import ok5 from "/barstool-store.svg"
 
 import hacker from "/hacker.png"
-import React, {useState} from 'react'
+import React, { useState, useRef } from 'react'
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -32,6 +34,25 @@ import Header from '../Header/Header';
 
 export default function Home() {
     const [counter, setCounter] = useState(false)
+    const form = useRef();
+
+    const sendEmail = (e) => {
+        e.preventDefault();
+
+        emailjs
+            .sendForm('service_nhq2196', 'template_0fyfx2l', form.current, {
+                publicKey: 'Vb0OM4_N3phyg5cwd',
+            })
+            .then(
+                () => {
+                    console.log('SUCCESS!');
+                },
+                (error) => {
+                    console.log('FAILED...', error.text);
+                },
+            );
+    };
+
 
     AOS.init();
 
@@ -49,7 +70,7 @@ export default function Home() {
                     <img src={assest9} class="absolute top-0 left-40 w-32 md:w-40 lg:w-48 z-0" alt="Background Image" />
 
                     <div class="container mx-auto flex flex-col items-center justify-center">
-                    <h1 className="text-4xl md:text-6xl font-bold mb-6 text-center">Your Trusted <span style={{ color: "#00FF00", ":hover": { color: "white" } }} >Cybersecurity Partner</span>.</h1>
+                        <h1 className="text-4xl md:text-6xl font-bold mb-6 text-center">Your Trusted <span style={{ color: "#00FF00", ":hover": { color: "white" } }} >Cybersecurity Partner</span>.</h1>
                         <p class="text-lg md:text-xl mb-8 text-center max-w-lg">Empowering you with the tools and knowledge to <span className='text-green-500 hover:text-white'>safeguard your online presence.</span></p>
                         <div class="flex flex-row items-center justify-center gap-4">
                             <a href="#services" class="bg-green-700 hover:bg-green-500 text-white py-2 px-4 rounded-md text-lg font-semibold shadow-md transition duration-300 ease-in-out">Learn More</a>
@@ -73,7 +94,7 @@ export default function Home() {
                             </div>
                             <div className="md:7/12 lg:w-6/12 bg-slate-500 bg-opacity-60 py-10 px-5 rounded-xl">
                                 <h2 style={{ textShadow: " 2px 2px 4px rgba(0, 0, 0, 0.5)" }} className="text-2xl text-white font-medium text-shadow-lg md:text-4xl">
-                                    Protecting What <span style={{color:"#00FF00"}}>Matters Most.</span>
+                                    Protecting What <span style={{ color: "#00FF00" }}>Matters Most.</span>
                                 </h2>
                                 <p className="mt-6 text-white">
                                     ✔ From Targeted Phishing Attempts to Complex Network Intrusions, We Equip You with Battle-Tested Strategies and State-of-the-Art Solutions. <br /> <br /> ✔ Stay Ahead, Stay Secure, With Us by Your Side.
@@ -121,25 +142,25 @@ export default function Home() {
                 </section>
 
                 <section data-aos="fade-up" data-aos-anchor-placement="center-bottom">
-                <div className="flex justify-center items-center mb-10">
+                    <div className="flex justify-center items-center mb-10">
                         <h1 className="text-5xl text-white">Exciting Numbers</h1>
                     </div>
-            <ScrollTrigger onEnter={() => { setCounter(true) }} onExit={() => { setCounter(false) }}>
-                <div   className="grid-container text-xl mt-10 py-5">
-                    <div className="grid-item mx-auto flex flex-col items-center justify-center">
-                        {counter&&<div style={{fontWeight:700, fontSize:"40px", color:"#00FF00", marginBottom:"10px"}} >
-                        +<CountUp  start={0} end={34} duration={2} delay={0}/>
-                        </div>}
-                        <span>Clients</span></div>
-                    <div className="grid-item mx-auto flex flex-col items-center justify-center">{counter&&<div style={{fontWeight:700, fontSize:"40px", color:"#00FF00", marginBottom:"10px"}}>
-                        +<CountUp start={0} end={1230} duration={2} delay={0}/></div>}<span>Bugs Found</span></div>
-                    <div className="grid-item mx-auto flex flex-col items-center justify-center">{counter&&<div style={{fontWeight:700, fontSize:"40px", color:"#00FF00", marginBottom:"10px"}}>
-                        +<CountUp start={0} end={350} duration={2} delay={0}/></div>}<span>Vulnerbilites detected</span></div>
-                    <div className="grid-item mx-auto flex flex-col items-center justify-center">{counter&&<div style={{fontWeight:700, fontSize:"40px", color:"#00FF00", marginBottom:"10px"}}>
-                        +$<CountUp start={0} end={130} duration={2} delay={0}/>k</div>}<span>Saved from Cyber Attacks</span></div>
-                </div>
-            </ScrollTrigger>
-            </section>
+                    <ScrollTrigger onEnter={() => { setCounter(true) }} onExit={() => { setCounter(false) }}>
+                        <div className="grid-container text-xl mt-10 py-5">
+                            <div className="grid-item mx-auto flex flex-col items-center justify-center">
+                                {counter && <div style={{ fontWeight: 700, fontSize: "40px", color: "#00FF00", marginBottom: "10px" }} >
+                                    +<CountUp start={0} end={34} duration={2} delay={0} />
+                                </div>}
+                                <span>Clients</span></div>
+                            <div className="grid-item mx-auto flex flex-col items-center justify-center">{counter && <div style={{ fontWeight: 700, fontSize: "40px", color: "#00FF00", marginBottom: "10px" }}>
+                                +<CountUp start={0} end={1230} duration={2} delay={0} /></div>}<span>Bugs Found</span></div>
+                            <div className="grid-item mx-auto flex flex-col items-center justify-center">{counter && <div style={{ fontWeight: 700, fontSize: "40px", color: "#00FF00", marginBottom: "10px" }}>
+                                +<CountUp start={0} end={350} duration={2} delay={0} /></div>}<span>Vulnerbilites detected</span></div>
+                            <div className="grid-item mx-auto flex flex-col items-center justify-center">{counter && <div style={{ fontWeight: 700, fontSize: "40px", color: "#00FF00", marginBottom: "10px" }}>
+                                +$<CountUp start={0} end={130} duration={2} delay={0} />k</div>}<span>Saved from Cyber Attacks</span></div>
+                        </div>
+                    </ScrollTrigger>
+                </section>
 
                 <section data-aos="fade-up" data-aos-anchor-placement="center-bottom" className="grid  place-items-center sm:mt-20">
                     <div className="flex justify-center items-center mb-10">
@@ -195,147 +216,163 @@ export default function Home() {
 
                 {/* Contact us part */}
 
-                
-                    {/* Contact us part */}
-                    <section id="contact-us" className=" flex mt-20 items-top justify-center">
 
-                        <div className="max-w-6xl mx-auto sm:px-6 lg:px-8">
-                            <div className="overflow-hidden">
-                                <div className="grid grid-cols-1 md:grid-cols-2">
-                                    <div className="p-6 mr-2 ml-2 bg-gray-100 rounded-lg">
-                                        <h1 className="text-3xl sm:text-4xl text-gray-800 font-extrabold tracking-tight">
-                                            Get in touch:
-                                        </h1>
-                                        <p className="text-normal text-lg sm:text-xl font-medium text-black mt-2">
-                                            Fill in the form to get a free vulnerability scan.
-                                        </p>
+                {/* Contact us part */}
+                <section id="contact-us" className=" flex items-top justify-center min-h-[700px]">
 
-                                        <div className="flex items-center mt-8 text-gray-900">
-                                            <svg
-                                                fill="none"
-                                                stroke="currentColor"
+                    <div className="max-w-6xl mx-auto sm:px-6 lg:px-8">
+                        <div className="overflow-hidden">
+                            <div className="grid grid-cols-1 md:grid-cols-2">
+                                <div className="p-6 mr-2 bg-gray-100 rounded-lg">
+                                    <h1 className="text-3xl sm:text-4xl text-gray-800 font-extrabold tracking-tight">
+                                        Get in touch:
+                                    </h1>
+                                    <p className="text-normal text-lg sm:text-xl font-medium text-gray-600 mt-2">
+                                        Fill in the form to get a free vulnerability scan.
+                                    </p>
+
+                                    <div className="flex items-center mt-8 text-gray-600">
+                                        <svg
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeLinejoin="round"
+                                            strokeWidth="1.5"
+                                            viewBox="0 0 24 24"
+                                            className="w-8 h-8 text-gray-500"
+                                        >
+                                            <path
                                                 strokeLinejoin="round"
                                                 strokeWidth="1.5"
-                                                viewBox="0 0 24 24"
-                                                className="w-8 h-8 text-gray-900"
-                                            >
-                                                <path
-                                                    strokeLinejoin="round"
-                                                    strokeWidth="1.5"
-                                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                                />
-                                                <path
-                                                    strokeLinejoin="round"
-                                                    strokeWidth="1.5"
-                                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                                                />
-                                            </svg>
-                                            <div className="ml-4 text-md tracking-wide font-semibold w-40">
-                                                Sans street, 41 avenue, Georgia.
-                                            </div>
-                                        </div>
-
-                                        <div className="flex items-center mt-4 text-gray-900">
-                                            <svg
-                                                fill="none"
-                                                stroke="currentColor"
+                                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                            />
+                                            <path
                                                 strokeLinejoin="round"
                                                 strokeWidth="1.5"
-                                                viewBox="0 0 24 24"
-                                                className="w-8 h-8 text-gray-900"
-                                            >
-                                                <path
-                                                    strokeLinejoin="round"
-                                                    strokeWidth="1.5"
-                                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                                                />
-                                            </svg>
-                                            <div className="ml-4 text-md tracking-wide font-semibold w-40">
-                                                +44 1234567890
-                                            </div>
-                                        </div>
-
-                                        <div className="flex items-center mt-2 text-gray-900">
-                                            <svg
-                                                fill="none"
-                                                stroke="currentColor"
-                                                strokeLinejoin="round"
-                                                strokeWidth="1.5"
-                                                viewBox="0 0 24 24"
-                                                className="w-8 h-8 text-gray-900"
-                                            >
-                                                <path
-                                                    strokeLinejoin="round"
-                                                    strokeWidth="1.5"
-                                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                                                />
-                                            </svg>
-                                            <div className="ml-4 text-md tracking-wide font-semibold w-40">
-                                                info@cyberguards.info
-                                            </div>
+                                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                            />
+                                        </svg>
+                                        <div className="ml-4 text-md tracking-wide font-semibold w-40">
+                                            Sans street, 41 avenue, Georgia.
                                         </div>
                                     </div>
 
-                                    <form className="p-6 flex flex-col justify-center">
-                                        <div className="flex flex-col">
-                                            <label htmlFor="name" className="hidden">
-                                                Full Name
-                                            </label>
-                                            <input
-                                                type="name"
-                                                name="name"
-                                                id="name"
-                                                placeholder="Full Name"
-                                                className="w-100 mt-2 py-3 px-3 rounded-lg bg-white border-gray-400 text-black font-semibold border-2 focus:border-green-500 focus:outline-none"
-                                            />
-                                        </div>
-
-                                        <div className="flex flex-col mt-2">
-                                            <label htmlFor="email" className="hidden">
-                                                Email
-                                            </label>
-                                            <input
-                                                type="email"
-                                                name="email"
-                                                id="email"
-                                                placeholder="Email"
-                                                className="w-100 mt-2 py-3 px-3 rounded-lg bg-white  border-gray-400 text-gray-800 font-semibold border-2 focus:border-green-500 focus:outline-none"
-                                            />
-                                        </div>
-
-                                        <div className="flex flex-col mt-2">
-                                            <label htmlFor="tel" className="hidden">
-                                                Number
-                                            </label>
-                                            <input
-                                                type="tel"
-                                                name="tel"
-                                                id="tel"
-                                                placeholder="Telephone Number"
-                                                className="w-100 mt-2 py-3 px-3 rounded-lg bg-white border-gray-400 text-gray-800 font-semibold border-2 focus:border-green-500 focus:outline-none"
-                                            />
-                                        </div>
-
-                                        <button
-                                            type="submit"
-                                            className="md:w-32 bg-cyan-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg mt-3 transition ease-in-out duration-300"
+                                    <div className="flex items-center mt-4 text-gray-600">
+                                        <svg
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeLinejoin="round"
+                                            strokeWidth="1.5"
+                                            viewBox="0 0 24 24"
+                                            className="w-8 h-8 text-gray-500"
                                         >
-                                            Submit
-                                        </button>
-                                    </form>
-                    
+                                            <path
+                                                strokeLinejoin="round"
+                                                strokeWidth="1.5"
+                                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                                            />
+                                        </svg>
+                                        <div className="ml-4 text-md tracking-wide font-semibold w-40">
+                                            +44 1234567890
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center mt-2 text-gray-600">
+                                        <svg
+                                            fill="none"
+                                            stroke="currentColor"
+                                            strokeLinejoin="round"
+                                            strokeWidth="1.5"
+                                            viewBox="0 0 24 24"
+                                            className="w-8 h-8 text-gray-500"
+                                        >
+                                            <path
+                                                strokeLinejoin="round"
+                                                strokeWidth="1.5"
+                                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                                            />
+                                        </svg>
+                                        <div className="ml-4 text-md tracking-wide font-semibold w-40">
+                                            info@cyberguards.info
+                                        </div>
+                                    </div>
                                 </div>
+                                <Formik
+                                    initialValues={{ user_email: '' }}
+                                    validate={values => {
+                                        const errors = {};
+                                        if (!values.user_email) {
+                                            errors.user_email = 'Required';
+                                        } else if (
+                                            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.user_email)
+                                        ) {
+                                            errors.user_email = 'Invalid email address';
+                                        }
+                                        return errors;
+                                    }}
+
+                                >
+                                    {({ isSubmitting }) => (
+                                        <form ref={form} onSubmit={sendEmail} className="p-6 flex flex-col justify-center">
+                                            <div className="flex flex-col">
+                                                <label htmlFor="user_name" className="hidden">
+                                                    Full Name
+                                                </label>
+                                                <input
+                                                    type="name"
+                                                    name="user_name"
+                                                    id="name"
+                                                    placeholder="Full Name"
+                                                    className="w-100 mt-2 py-3 px-3 rounded-lg bg-white border border-gray-400 text-gray-800 font-semibold focus:border-orange-500 focus:outline-none"
+                                                />
+                                                <ErrorMessage name="user_email" component="div" />
+                                            </div>
+
+                                            <div className="flex flex-col mt-2">
+                                                <label htmlFor="user_email" className="hidden">
+                                                    Email
+                                                </label>
+                                                <input
+                                                    type="email"
+                                                    name="user_email"
+                                                    id="email"
+                                                    placeholder="Email"
+                                                    className="w-100 mt-2 py-3 px-3 rounded-lg bg-white border border-gray-400 text-gray-800 font-semibold focus:border-orange-500 focus:outline-none"
+                                                />
+                                            </div>
+
+                                            <div className="flex flex-col mt-2">
+                                                <label htmlFor="user_tel" className="hidden">
+                                                    Number
+                                                </label>
+                                                <input
+                                                    type="tel"
+                                                    name="user_tel"
+                                                    id="tel"
+                                                    placeholder="Telephone Number"
+                                                    className="w-100 mt-2 py-3 px-3 rounded-lg bg-white border border-gray-400 text-gray-800 font-semibold focus:border-orange-500 focus:outline-none"
+                                                />
+                                            </div>
+
+                                            <button
+                                                type="submit" value="Send"
+                                                className="md:w-32 bg-cyan-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg mt-3 transition ease-in-out duration-300"
+                                            >
+                                                Submit
+                                            </button>
+                                        </form>
+                                    )}
+                                </Formik>
                             </div>
-                            
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                </div>
-
-                <div className="flex items-center justify-center">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3317.3060291184975!2d-84.39139910181535!3d33.75275694504925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f503812f4eb583%3A0x465d2930ed32543f!2sFive%20Points%2C%20Atlanta%2C%20GA%2030303%2C%20USA!5e0!3m2!1sen!2s!4v1712521347022!5m2!1sen!2s"  height="300" style={{border:"0px", marginTop:"30px", marginBottom:"30px",width:"90vw"}} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
             </div>
-      
+
+            <div className="flex items-center justify-center">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3317.3060291184975!2d-84.39139910181535!3d33.75275694504925!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f503812f4eb583%3A0x465d2930ed32543f!2sFive%20Points%2C%20Atlanta%2C%20GA%2030303%2C%20USA!5e0!3m2!1sen!2s!4v1712521347022!5m2!1sen!2s" height="300" style={{ border: "0px", marginTop: "30px", marginBottom: "30px", width: "90vw" }} allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+
     );
 }
