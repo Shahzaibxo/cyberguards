@@ -30,7 +30,7 @@ export default function Contact() {
             <div className="flex justify-center items-center pt-20 mb-10">
                 <h1 className="text-5xl text-white">Contact Us</h1>
             </div>
-            <section id="contact-us" className=" flex items-top justify-center min-h-[700px]">
+            <section id="contact-us" className=" flex items-top justify-center h-screen">
 
                 <div className="max-w-6xl mx-auto sm:px-6 lg:px-8">
                     <div className="overflow-hidden">

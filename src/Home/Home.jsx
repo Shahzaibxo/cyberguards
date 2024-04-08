@@ -218,7 +218,7 @@ export default function Home() {
 
 
                 {/* Contact us part */}
-                <section id="contact-us" className=" flex items-top justify-center min-h-[700px]">
+                <section id="contact-us" className=" flex items-top justify-center">
 
                     <div className="max-w-6xl mx-auto sm:px-6 lg:px-8">
                         <div className="overflow-hidden">
